@@ -1,0 +1,59 @@
+---
+# ansible-playbook controller.playbook.yml --vault-password-file call-keychain.sh
+# OR: --ask-vault-password, --ask-vault-pass
+- name: Playbook for Ansible controller
+  hosts: ansible
+  become: true
+
+  roles:
+    - common
+    - docker
+    - gitlab-install-runner
+    - gitlab-register-runner
+
+  vars:
+    default_user: admin
+
+  vars_prompt:
+    - name: vars_vault_path
+      private: false
+      prompt: |
+        ---------------------------------------------
+        Enter the absolute path to vars.vault.yml ...
+        ---------------------------------------------
+
+  tasks:
+    - name: Load variables from Ansible vault
+      ansible.builtin.include_vars:
+        file: "{{ vars_vault_path }}"
+
+    - name: Ensure ~/.ssh directory exists
+      ansible.builtin.file:
+        path: "/home/{{ item }}/.ssh"
+        state: directory
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: "0700"
+      loop:
+        - "{{ default_user }}"
+        - gitlab-runner
+
+    - name: Copy SSH private key from vault
+      ansible.builtin.copy:
+        content: "{{ ssh_private_key }}"
+        dest: "/home/{{ item }}/.ssh/id_rsa"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: "0600"
+      loop:
+        - "{{ default_user }}"
+        - gitlab-runner
+
+    - name: Auto accept managed_hosts ssh key verification
+      ansible.builtin.lineinfile:
+        path: "/home/{{ item }}/.ssh/config"
+        line: StrictHostKeyChecking=accept-new
+        create: yes
+      loop:
+        - "{{ default_user }}"
+        - gitlab-runner

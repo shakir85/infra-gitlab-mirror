@@ -1,0 +1,13 @@
+---
+- name: Play for configuring [galaxy_testing]
+  hosts: galaxy_testing
+  become: true
+
+  vars:
+    nfs_share: ansible
+  
+  roles:
+    - common
+    - docker
+    - gitlab-install-runner
+    - nfs

@@ -1,0 +1,57 @@
+---
+- name: Add Docker's official GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Add Docker's official APT repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: Install Docker CE
+  ansible.builtin.apt:
+    name: docker-ce={{ version_string }}
+    state: present
+
+- name: Install Containerd
+  ansible.builtin.apt:
+    name: containerd.io={{ containerd_version }}
+    state: present
+
+- name: Install Docker Compose
+  ansible.builtin.apt:
+    name: docker-compose-plugin={{ docker_compose_version }}
+    state: present
+
+- name: Install Docker Buildx
+  ansible.builtin.apt:
+    name: docker-buildx-plugin={{ docker_buildx_version }}
+    state: present
+
+- name: Create Docker Group
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Add default user to docker group {{ default_user }}
+  ansible.builtin.user:
+    name: "{{ default_user }}"
+    groups: "docker"
+    append: true
+
+- name: Copy custom daemon.json file
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/daemon.json"
+    dest: /etc/docker
+    owner: root
+    group: root
+    mode: "0644"
+    force: true
+
+- name: Ensure docker service is running
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: true
+  notify: Reload user session and restart Docker service

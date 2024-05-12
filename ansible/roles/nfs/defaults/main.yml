@@ -1,0 +1,6 @@
+---
+nfs_mount_points:
+  - data
+  - config
+nfs_share: "{{ inventory_hostname }}"
+nfs_mount: "10.10.50.38:/volume1/{{ nfs_share }}"

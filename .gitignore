@@ -1,0 +1,24 @@
+# IDEs/Text Editors
+.idea/
+.vscode/
+
+# Terraform files
+.terraform/*
+**/.terraform*
+*.tfstate
+*.tfstate.*
+*.tfplan
+terraform.tfstate
+*.plan
+*tfvars
+# misc
+*.cer
+*.crt
+*.key
+*.pem
+.venv/
+key.yml
+ansible_id_rsa.pub
+
+# Galaxy roles to avoid linter failure
+ansible/roles/datadog.datadog
