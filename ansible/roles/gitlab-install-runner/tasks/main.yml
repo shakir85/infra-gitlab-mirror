@@ -1,0 +1,29 @@
+---
+# https://gitlab-runner-downloads.s3.amazonaws.com/latest/index.html
+- name: Check if Debian package is in /tmp
+  ansible.builtin.stat:
+    path: /tmp/{{ gitlab_deb_pkg_name }}
+  register: runner_debian_package
+
+- name: Download Gitlab runner if not in /tmp
+  ansible.builtin.get_url:
+    url: "{{ gitlab_deb_pkg_url }}"
+    dest: /tmp/{{ gitlab_deb_pkg_name }}
+    mode: 0755
+    checksum: "sha256:{{ gitlab_deb_pkg_sha }}"
+  when: not runner_debian_package.stat.exists
+
+- name: Install Gitlab Runner
+  ansible.builtin.apt:
+    deb: /tmp/{{ gitlab_deb_pkg_name }}
+
+- name: Ensure gitlab-runner service is running
+  ansible.builtin.systemd:
+    name: gitlab-runner
+    state: started
+    enabled: true
+
+- name: Delete downloaded Gitlab Runner Debian package from /temp
+  ansible.builtin.file:
+    path: /tmp/{{ gitlab_deb_pkg_name }}
+    state: absent

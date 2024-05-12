@@ -1,0 +1,5 @@
+---
+- hosts: devops
+  remote_user: "{{ default_user }}"
+  roles:
+    - docker

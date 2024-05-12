@@ -1,0 +1,4 @@
+---
+default_user: shakir
+default_user_home: "/home/{{ default_user }}"
+default_timezone: America/Los_Angeles

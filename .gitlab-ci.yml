@@ -1,0 +1,13 @@
+# include:
+#   local: "/.gitlab/pipelines/Bootstrap-Ansible-Hosts.gitlab-ci.yml"
+stages:
+  - test
+
+run-ansible-playbook:
+  stage: test
+  tags:
+    - ansible
+  before_script:
+    - cd ansible/
+  script:
+    - ansible-playbook galaxy_testing.playbook.yml

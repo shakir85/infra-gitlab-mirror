@@ -1,0 +1,23 @@
+---
+- name: Install common packages
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: true
+
+- name: Remove /etc/motd file
+  ansible.builtin.file:
+    path: /etc/motd
+    state: absent
+
+- name: Backup default '.bashrc' file
+  ansible.builtin.command: mv {{ default_user_home }}/.bashrc {{ default_user_home }}/.default_bashrc_backup
+  changed_when: false
+
+- name: Copy enhanced .bashrc file to /home/{{ default_user }}/
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/.bashrc"
+    dest: "{{ default_user_home }}"
+    owner: "{{ default_user }}"
+    group: "{{ default_user }}"
+  no_log: true
