@@ -5,9 +5,11 @@
 
   vars:
     nfs_share: ansible
-  
+
   roles:
     - common
     - docker
-    - gitlab-install-runner
+    - gitlab_install_runner
     - nfs
+    - docker_group
+    - gitlab_register_runner

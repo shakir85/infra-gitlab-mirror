@@ -17,7 +17,7 @@ Two register a runner, you need two things:
 
 1. Create a runner in your project (Gitlab UI) [follow the new Gitlab token registration process.](https://docs.gitlab.com/ee/architecture/blueprints/runner_tokens/index.html#using-the-authentication-token-in-place-of-the-registration-token)
 2. Export the following shell environment variables:
-   - `RUNNER_TOKEN`: Gitlab runner token provided from step 1 above. 
+   - `RUNNER_TOKEN`: Gitlab runner token provided from step 1 above. Or you can use `-e 'runner_token=XXXXX` when executing the playbook.
    - `GITLAB_API_TOKEN`: Gitlab API access token with `api` read/write scope. 
 
 If the runner wasn't created in the UI, GitLab will interpret your runner token as an absolute token, resulting in the following error:

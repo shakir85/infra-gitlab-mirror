@@ -1,0 +1,23 @@
+---
+# Tasks file for gitlab-runner registration
+# Fail the task if the runner token is not set
+- name: Print msg
+  ansible.builtin.debug:
+    msg: |
+      => Registration token variable 'RUNNER_TOKEN' is not set. No runner was registered.
+      => Either export your token as `RUNNER_TOKEN=glrt-XXXXX` as an environment variable,
+      => or add "-e 'runner_token=glrt-XXXXXX'" to the ansible-playbook command.
+  when: runner_token == "" # so it doesn't print msg if 'ok'
+  failed_when: runner_token == ""
+
+- name: Register Gitlab Runner (shell-executes)
+  when: runner_token | default('', true) | trim != ''
+  register: create_runner
+  ansible.builtin.shell: |
+    gitlab-runner register \
+    --url "https://gitlab.com" \
+    --non-interactive \
+    --executor shell \
+    --token "{{ runner_token }}" \
+    --description "{{ runner_description }}" \
+    --executor shell

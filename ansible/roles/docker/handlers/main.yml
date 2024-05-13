@@ -1,12 +1,12 @@
 ---
 - name: Reload user session and restart Docker service
+  notify: restart service
   block:
     - name: Reload user session
-      shell: su - {{ ansible_user_id }} -c 'true'
+      ansible.builtin.command: su - {{ ansible_user_id }} -c 'true'
       async: 1
       poll: 0
     - name: Restart Docker service
       ansible.builtin.service:
         name: docker
         state: restarted
-  notify: restart service

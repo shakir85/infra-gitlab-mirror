@@ -1,0 +1,3 @@
+users_list:
+  - gitlab-runner
+  - ansible-user
