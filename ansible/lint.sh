@@ -15,7 +15,7 @@ lint() {
                 --force-color  "$1"
 }
 
-Lint playbooks
+# Lint playbooks
 for file in ./*.playbook.yml; do
     
     f=$(basename "$file")
