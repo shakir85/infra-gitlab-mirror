@@ -8,8 +8,8 @@
   roles:
     - common
     - docker
-    - gitlab-install-runner
-    - gitlab-register-runner
+    - gitlab_install_runner
+    - gitlab_register_runner
 
   vars:
     default_user: admin
@@ -53,7 +53,7 @@
       ansible.builtin.lineinfile:
         path: "/home/{{ item }}/.ssh/config"
         line: StrictHostKeyChecking=accept-new
-        create: yes
+        create: true
       loop:
         - "{{ default_user }}"
         - gitlab-runner

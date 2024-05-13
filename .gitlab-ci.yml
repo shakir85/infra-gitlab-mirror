@@ -1,13 +1,15 @@
 # include:
 #   local: "/.gitlab/pipelines/Bootstrap-Ansible-Hosts.gitlab-ci.yml"
 stages:
-  - test
+  - lint
 
-run-ansible-playbook:
-  stage: test
+lint-ansible-playbook:
+  stage: lint
   tags:
     - ansible
   before_script:
     - cd ansible/
+    - ansible-galaxy collection install --requirements-file collections/requirements.yml --force
   script:
-    - ansible-playbook galaxy_testing.playbook.yml
+    - chmod +x lint.sh
+    - ./lint.sh

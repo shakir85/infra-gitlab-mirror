@@ -39,6 +39,7 @@
 #
 # Note: Neither the 'masked: false' Ansible directive nor 'command: systemctl unmask ...' worked.
 - name: Fix NFS Systemd service file
+  when: ansible_distribution == 'Debian'
   block:
     - name: Remove broken NFS service file
       ansible.builtin.file:
@@ -48,7 +49,6 @@
     - name: Force systemd daemon to reread systemd-units configs
       ansible.builtin.systemd:
         daemon_reload: true
-  when: ansible_distribution == 'Debian'
 
 - name: Ensure NFS client service is running
   ansible.builtin.systemd:
@@ -69,6 +69,7 @@
   loop: "{{ nfs_mount_points }}"
   # Avoid chmod/chown errors; sometimes shares are owned by nfs root
   ignore_errors: true
+  register: ignore_errors_register
 
 - name: Check NFS source
   ansible.builtin.debug:

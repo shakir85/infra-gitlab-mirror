@@ -17,22 +17,22 @@
           - "Default user is  => {{ ansible_ctrl_user }}"
           - "SSH public key path is => {{ pub_ssh_key_file }}"
 
-    - name: Create "{{ ansible_ctrl_user }}" group
+    - name: Create ansible user group
       ansible.builtin.group:
         name: "{{ ansible_ctrl_user }}"
         state: present
 
-    - name: Create "{{ ansible_ctrl_user }}" user
+    - name: Create ansible user
       ansible.builtin.user:
         name: "{{ ansible_ctrl_user }}"
         group: "{{ ansible_ctrl_user }}"
         groups:
           - sudo
-        create_home: yes
+        create_home: true
         state: present
         shell: /bin/bash
 
-    - name: Append SSH public key to authorized_keys for "{{ ansible_ctrl_user }}"
+    - name: Append SSH public key to authorized_keys for ansible user
       ansible.posix.authorized_key:
         user: "{{ ansible_ctrl_user }}"
         key: "{{ lookup('file', '{{ pub_ssh_key_file }}') }}"
@@ -40,9 +40,9 @@
         exclusive: true
         manage_dir: true
 
-    - name: Give "{{ ansible_ctrl_user }}" privilege escalation
+    - name: Give ansible user privilege escalation
       community.general.sudoers:
         name: allow-ansible-user-all
         state: present
         user: "{{ ansible_ctrl_user }}"
-        commands: ALL 
+        commands: ALL
