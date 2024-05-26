@@ -19,6 +19,7 @@ terraform.tfstate
 .venv/
 key.yml
 ansible_id_rsa.pub
+**/.DS_Store
 
 # Galaxy roles to avoid linter failure
 ansible/roles/datadog.datadog
