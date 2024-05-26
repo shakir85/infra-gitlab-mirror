@@ -24,14 +24,14 @@ warning(){
 }
 
 # -- Variables ---------------------------------------
-PUB_KEY_FILE_PATH=$1
-USER=$2
+USER=$1
+PUB_KEY_FILE_PATH=$2
 
 info "Setting remote_user..."
 
 if [ "$USER" == "" ]; then
-    warning "You didn't provide a remote_user, using default: remote_user = ansible-user"
-    USER="ansible-user"
+    warning "You didn't provide a remote_user, specify a username that exists on the remote host"
+    exit 1
 fi
 
 if [ "$PUB_KEY_FILE_PATH" == "" ]; then
@@ -41,7 +41,7 @@ else
     info "Bootstrapping using:
     remote_user = $USER
     public key = $PUB_KEY_FILE_PATH"
-    sleep 3
+    sleep 5
     echo ""
     ansible-playbook bootstrap.playbook.yml -u "$USER" --extra-vars="pub_ssh_key_file=$PUB_KEY_FILE_PATH"
 fi
