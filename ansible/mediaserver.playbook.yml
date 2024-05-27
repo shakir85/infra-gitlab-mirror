@@ -1,0 +1,28 @@
+---
+- name: Play for configuring [mediaserver]
+  hosts: mediaserver
+  become: true
+
+  vars:
+    intake_mount_points:
+      - movies
+      - tv
+      - anime
+
+  roles:
+    - common
+    - docker
+    - gitlab_install_runner
+    - gitlab_register_runner
+    - nfs
+    - docker_group
+
+  tasks:
+    - name: Additional NFS mounts for media intake
+      ansible.posix.mount:
+        src: "10.10.50.38:/volume1/mediaintake/{{ item }}"
+        path: "/mediaintake/{{ item }}"
+        fstype: nfs
+        opts: "rw,sync"
+        state: mounted
+      loop: "{{ intake_mount_points }}"
