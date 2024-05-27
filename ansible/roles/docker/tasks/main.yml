@@ -18,6 +18,7 @@
   ansible.builtin.apt:
     name: containerd.io={{ containerd_version }}
     state: present
+    allow_downgrade: true
 
 - name: Install Docker Compose
   ansible.builtin.apt:

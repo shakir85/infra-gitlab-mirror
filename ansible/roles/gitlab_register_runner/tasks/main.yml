@@ -1,6 +1,11 @@
 ---
 # Tasks file for gitlab-runner registration
 # Fail the task if the runner token is not set
+- name: Check runner token
+  ansible.builtin.debug:
+    msg:
+      - Using runner token "{{ runner_token }}"
+
 - name: Print msg
   ansible.builtin.debug:
     msg: |
