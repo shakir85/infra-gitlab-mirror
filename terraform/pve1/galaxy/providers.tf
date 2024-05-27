@@ -1,7 +1,8 @@
 terraform {
   required_version = ">= 1.5.7"
-  backend "local" {
-    path = "./galaxy-test.tfstate"
+  backend "s3" {
+    region = "us-east-1"
+    key    = "vm-galaxy-state"
   }
 
   required_providers {
