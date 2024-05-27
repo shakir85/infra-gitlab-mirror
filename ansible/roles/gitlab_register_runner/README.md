@@ -5,22 +5,19 @@ Gitlab Register Runner
 
 **Needs gitlab-runner installed first**
 
-A role configuring GitLab Runner instances on Debian hosts. 
+A role for registering a GitLab Runner.
 
 Requirements
 ------------
 
-- Gitlab runner previously installed (see `roles/gitlab-install-runner`)
-- Ensure that the necessary dependencies for Gitlab Runner are met on the target host.
+- Gitlab runner previously installed (see `roles/gitlab-install-runner`.)
 
-Two register a runner, you need two things:
+To register a runner, you need two things:
 
 1. Create a runner in your project (Gitlab UI) [follow the new Gitlab token registration process.](https://docs.gitlab.com/ee/architecture/blueprints/runner_tokens/index.html#using-the-authentication-token-in-place-of-the-registration-token)
-2. Export the following shell environment variables:
-   - `RUNNER_TOKEN`: Gitlab runner token provided from step 1 above. Or you can use `-e 'runner_token=XXXXX` when executing the playbook.
-   - `GITLAB_API_TOKEN`: Gitlab API access token with `api` read/write scope. 
+2. Export the token as a shell environment variable: `RUNNER_TOKEN=glrt-XXXXXX`: (or you can use the Ansible flag `-e 'runner_token=XXXXX'` when executing the playbook.)
 
-If the runner wasn't created in the UI, GitLab will interpret your runner token as an absolute token, resulting in the following error:
+If the runner wasn't created in the UI, GitLab will interpret your runner token as invalid, resulting in the following error:
 ```
   stderr: |-
     Verifying runner... is not valid 
@@ -32,9 +29,8 @@ Role Variables
 
 The role requires the following variables, which are included in the `defaults/main.yml`:
 
-- `gitlab_api_token`: The GitLab API token used for recycling runners, exported as an environment variable (see requirements).
-- `runner_description`: Description for the registered GitLab Runner. Please note that unlike the old registration method, the new runner registration method ignores this description flag, which is unfortunate. The description is only shown in the `config.toml` file.
 - `runner_token`: GitLab runner token, starting with `glrt-`, exported as an environment variable (see requirements).
+- `runner_description`: Description for the registered GitLab Runner. Please note that unlike the old registration method, the new runner registration method ignores this description flag, which is unfortunate. The description is only shown in the `config.toml` file.
 
 Dependencies
 ------------

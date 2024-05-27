@@ -4,13 +4,13 @@
 - name: Print msg
   ansible.builtin.debug:
     msg: |
-      => Registration token variable 'RUNNER_TOKEN' is not set. No runner was registered.
+      => Registration token variable 'RUNNER_TOKEN' is not set,
       => Either export your token as `RUNNER_TOKEN=glrt-XXXXX` as an environment variable,
       => or add "-e 'runner_token=glrt-XXXXXX'" to the ansible-playbook command.
   when: runner_token == "" # so it doesn't print msg if 'ok'
   failed_when: runner_token == ""
 
-- name: Register Gitlab Runner (shell-executes)
+- name: Register Gitlab Runner (shell-executer)
   when: runner_token | default('', true) | trim != ''
   register: create_runner
   ansible.builtin.shell: |
