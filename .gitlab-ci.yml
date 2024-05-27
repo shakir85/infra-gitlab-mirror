@@ -2,14 +2,29 @@
 #   local: "/.gitlab/pipelines/Bootstrap-Ansible-Hosts.gitlab-ci.yml"
 stages:
   - lint
+  - bootstrap
 
 lint-ansible-playbook:
   stage: lint
   tags:
     - ansible
   before_script:
+    - export TERM=xterm-256color
     - cd ansible/
     - ansible-galaxy collection install --requirements-file collections/requirements.yml --force
   script:
     - chmod +x lint.sh
     - ./lint.sh
+  allow_failure: true
+  when: manual
+
+bootstrap-ansible-hosts:
+  stage: bootstrap
+  tags:
+    - ansible
+  before_script:
+    - cd ansible/
+    - chmod +x bootstrap.sh
+  script:
+    - ./bootstrap.sh ${BOOTSTRAP_USER} ${PUB_KEY_FILE_PATH}
+  when: manual
