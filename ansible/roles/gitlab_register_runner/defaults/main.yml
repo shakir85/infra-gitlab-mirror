@@ -2,4 +2,4 @@
 # Export this vars first or override it using -e on the command line at run time.
 runner_token: "{{ lookup('env', 'RUNNER_TOKEN') }}"
 #
-runner_description: "Ansible-Generated host: {{ inventory_hostname }} timestamp:{{ ansible_date_time.date }}"
+runner_description: "Ansible-Generated host: {{ inventory_hostname }} date:{{ ansible_date_time.date }}"

@@ -1,0 +1,7 @@
+---
+- name: Play for registering Gitlab runner
+  hosts: "{{ target_host }}"
+  become: true
+
+  roles:
+    - gitlab_register_runner
