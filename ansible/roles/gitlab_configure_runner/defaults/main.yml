@@ -1,0 +1,5 @@
+---
+allowed_commands:
+  - /usr/bin/tar
+  - /usr/bin/mv
+  - /bin/rm
