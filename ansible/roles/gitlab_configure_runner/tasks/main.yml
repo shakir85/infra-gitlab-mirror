@@ -1,0 +1,12 @@
+---
+# Tasks file for gitlab-runner configs
+- name: Configure sudoers for gitlab-runner
+  ansible.builtin.template:
+    src: sudoers.j2
+    dest: /etc/sudoers.d/gitlab
+    mode: "0440"
+
+- name: Disable default password
+  ansible.builtin.user:
+    name: gitlab-runner
+    password: "*"

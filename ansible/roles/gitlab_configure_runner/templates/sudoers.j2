@@ -1,0 +1,5 @@
+# Cmnd alias specification
+Cmnd_Alias COMMANDS = {{ allowed_commands | join(', ') }}
+
+# Allow gitlab-runner to use the restricted commands without a password
+gitlab-runner {{ ansible_hostname }}=(ALL:ALL) COMMANDS
