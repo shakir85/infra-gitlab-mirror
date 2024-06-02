@@ -16,3 +16,6 @@
     path: "{{ default_user_home }}/.bashrc"
     marker: "## {mark} ANSIBLE MANAGED BLOCK ##"
   no_log: true
+
+- name: Set vim as the default editor using update-alternatives
+  ansible.builtin.command: update-alternatives --set editor /usr/bin/vim.basic
