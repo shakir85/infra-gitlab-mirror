@@ -1,0 +1,6 @@
+- name: Play for installing RabbitMQ
+  hosts: rabbitmq
+  become: true
+
+  roles:
+    - geerlingguy.rabbitmq
