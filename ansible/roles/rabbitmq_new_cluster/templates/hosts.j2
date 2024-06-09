@@ -1,0 +1,10 @@
+{% for item in groups['rabbitmq_hosts'] %}
+{% if item == inventory_hostname %}
+127.0.0.1  {{ item }}
+{% endif %}
+{% endfor %}
+{% for host in groups['rabbitmq_hosts'] %}
+{% if host != inventory_hostname %}
+{{ hostvars[host]['ansible_host'] }}  {{ host }}
+{% endif %}
+{% endfor %}

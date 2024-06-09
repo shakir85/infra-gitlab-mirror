@@ -1,6 +1,7 @@
 - name: Play for installing RabbitMQ
-  hosts: rabbitmq
+  hosts: rabbitmq_hosts
   become: true
 
   roles:
     - geerlingguy.rabbitmq
+    - rabbitmq_new_cluster

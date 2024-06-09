@@ -1,0 +1,4 @@
+var_disk_node: "{{ groups['rabbitmq_disk_nodes'][0] }}"
+var_rabbitmq_ram_nodes: "{{ groups['rabbitmq_ram_nodes'] }}"
+rabbitmq_base: "/var/lib/rabbitmq"
+rabbitmq_mnesia_base: "{{ rabbitmq_base }}/mnesia"

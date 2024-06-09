@@ -1,0 +1,68 @@
+---
+- name: Update /etc/hosts with RabbitMQ cluster nodes
+  ansible.builtin.template:
+    src: hosts.j2
+    dest: /etc/hosts
+    mode: "0644"
+    backup: true
+
+- name: Generate random string
+  ansible.builtin.set_fact:
+    erlang_cookie: "{{ lookup('community.general.random_string', length=25, lower=false, numbers=false, special=false) }}"
+  run_once: true
+
+- name: Propagate the random string to all hosts
+  ansible.builtin.set_fact:
+    erlang_cookie: "{{ hostvars['localhost']['erlang_cookie'] }}"
+  when: erlang_cookie is not defined
+
+- name: Print the random string
+  ansible.builtin.debug:
+    msg: "The generated random string is: {{ erlang_cookie }}"
+
+- name: Set default RabbitMQ cookie for all nodes
+  ansible.builtin.template:
+    src: erlang_cookie.j2
+    dest: "{{ rabbitmq_base }}/.erlang.cookie"
+    mode: "0600"
+
+- name: Copy erlang cookie to home of {{ ansible_user }}
+  ansible.builtin.copy:
+    src: "{{ rabbitmq_base }}/.erlang.cookie"
+    dest: "~/.erlang.cookie"
+    mode: "0600"
+    remote_src: true
+
+- name: Restart RabbitMQ service, also issue daemon-reload to pick up config changes
+  ansible.builtin.systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: rabbitmq-server
+
+- name: Join the RabbitMQ cluster
+  when: inventory_hostname in var_rabbitmq_ram_nodes
+  block:
+    - name: Stop RabbitMQ app on ram nodes
+      ansible.builtin.command: rabbitmqctl stop_app
+      changed_when: false
+
+    - name: Reset RabbitMQ ram nodes
+      ansible.builtin.command: rabbitmqctl reset
+      changed_when: false
+
+    - name: Join cluster
+      ansible.builtin.command: rabbitmqctl join_cluster rabbit@{{ var_disk_node }}
+      changed_when: false
+
+    - name: Start RabbitMQ app on ram nodes
+      ansible.builtin.command: rabbitmqctl start_app
+      changed_when: false
+
+- name: Get cluster status
+  ansible.builtin.command: rabbitmqctl cluster_status
+  changed_when: false
+  register: cluster_status
+
+- name: Print cluster status
+  ansible.builtin.debug:
+    msg: "{{ cluster_status.stdout }}"
