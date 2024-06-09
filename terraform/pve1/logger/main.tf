@@ -9,7 +9,7 @@ module "logger" {
   cloud_image_info    = ["sdc", "debian-12-generic-amd64.qcow2.img"]
   tags                = ["prod", "debian12"]
   description         = "Managed by Terraform. Logs management."
-  memory              = 4096
+  memory              = 8192
   cores               = 2
   sockets             = 1
   disk_size           = 256
