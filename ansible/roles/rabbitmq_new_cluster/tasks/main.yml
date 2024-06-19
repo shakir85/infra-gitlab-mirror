@@ -51,7 +51,7 @@
       changed_when: false
 
     - name: Join cluster
-      ansible.builtin.command: rabbitmqctl join_cluster rabbit@{{ var_disk_node }}
+      ansible.builtin.command: rabbitmqctl join_cluster --ram rabbit@{{ var_disk_node }}
       changed_when: false
 
     - name: Start RabbitMQ app on ram nodes

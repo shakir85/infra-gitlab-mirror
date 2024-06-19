@@ -1,0 +1,7 @@
+vhost: "/"
+policy_name: "ha-policy"
+pattern: "^"
+sync_node_count: 2
+message_ttl: 600000
+rabbitmq_plugins:
+  - rabbitmq_management

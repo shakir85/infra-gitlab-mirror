@@ -5,3 +5,4 @@
   roles:
     - geerlingguy.rabbitmq
     - rabbitmq_new_cluster
+    - rabbitmq_configure

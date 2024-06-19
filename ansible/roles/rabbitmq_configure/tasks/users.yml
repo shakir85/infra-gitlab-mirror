@@ -1,0 +1,5 @@
+---
+- name: Print message
+  ansible.builtin.debug:
+    msg:
+      - Place holder for adding users configuration

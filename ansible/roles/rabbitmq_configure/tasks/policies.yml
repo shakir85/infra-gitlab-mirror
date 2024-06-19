@@ -1,0 +1,11 @@
+---
+- name: Print message
+  ansible.builtin.debug:
+    msg:
+      - Place holder for adding policies
+
+# - name: Render RabbitMQ configuration template
+#   template:
+#     src: rabbitmq.conf.j2
+#     dest: /etc/rabbitmq/rabbitmq.conf
+#   notify: Restart RabbitMQ

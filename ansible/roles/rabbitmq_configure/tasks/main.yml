@@ -1,0 +1,9 @@
+---
+- name: Include policy tasks
+  include_tasks: policies.yml
+
+- name: Include user tasks
+  include_tasks: users.yml
+
+- name: Include plugins tasks
+  include_tasks: plugins.yml

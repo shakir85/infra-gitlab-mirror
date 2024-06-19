@@ -1,0 +1,1 @@
+This role installs RabbitMQ plugins (currently only the management plugin) and configures a vhost.

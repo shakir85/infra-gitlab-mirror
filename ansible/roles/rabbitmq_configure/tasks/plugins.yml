@@ -1,0 +1,5 @@
+---
+- name: Install RabbitMQ plugins
+  ansible.builtin.command: rabbitmq-plugins enable {{ item }}
+  changed_when: false
+  loop: "{{ rabbitmq_plugins }}"

@@ -1,0 +1,16 @@
+[rabbitmq_management].
+{% set vhost = vhost | default('/') %}
+{% set policy_name = policy_name | default('ha-policy') %}
+{% set pattern = pattern | default('^') %}
+{% set sync_node_count = sync_node_count | default(2) %}
+{% set message_ttl = message_ttl | default(600000) %}
+
+policies.vhosts.1 = {{ vhost }}
+policies.policies.1.name = {{ policy_name }}
+policies.policies.1.pattern = {{ pattern }}
+
+policies.policies.1.definition.ha-mode = exactly
+policies.policies.1.definition.ha-params = {{ sync_node_count }}
+policies.policies.1.definition.ha-sync-mode = automatic
+policies.policies.1.definition.message-ttl = {{ message_ttl }}
+policies.policies.1.definition.expires = {{ message_ttl }}
