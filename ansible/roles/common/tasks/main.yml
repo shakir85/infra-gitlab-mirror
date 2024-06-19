@@ -19,3 +19,9 @@
 
 - name: Set vim as the default editor using update-alternatives
   ansible.builtin.command: update-alternatives --set editor /usr/bin/vim.basic
+
+- name: Backup and deploy /etc/hosts file
+  template:
+    src: templates/etc_hosts.j2
+    dest: /etc/hosts
+    backup: yes

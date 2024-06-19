@@ -16,3 +16,4 @@ common_packages:
   - git
   - lsof
   - dnsutils
+  - netcat-traditional
