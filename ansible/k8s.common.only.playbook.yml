@@ -1,0 +1,7 @@
+---
+- name: Play for configuring [k8s_hosts]
+  hosts: k8s_hosts
+  become: true
+
+  roles:
+    - common
