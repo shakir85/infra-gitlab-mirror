@@ -27,7 +27,7 @@ I do not use the Proxmox console to create resources (VMs/LXCs). Everything is p
 ## Near future plans
 
 - Selfhost the prod container images on Gitlab Container Registry, use tags and proper deployment process.
-- Add additional logging via Graylog.
+- ~~Add additional logging via Graylog~~ Done!.
 - Add an additional monitoring service (uptime service).
 
 ## Future plans
