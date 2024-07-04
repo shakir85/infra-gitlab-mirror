@@ -37,3 +37,4 @@ update-system-packages:
   script:
     - ansible-playbook update_system.playbook.yml
   when: manual
+  allow_failure: true # becuase some hosts are configured differently
