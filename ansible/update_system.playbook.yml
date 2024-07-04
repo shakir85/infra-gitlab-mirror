@@ -1,6 +1,6 @@
 ---
 - name: Updating system packages
-  hosts: testing
+  hosts: managed_hosts
   become: yes
 
   tasks:
