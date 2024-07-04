@@ -36,3 +36,4 @@ update-system-packages:
     - cd ansible/
   script:
     - ansible-playbook update_system.playbook.yml
+  when: manual
