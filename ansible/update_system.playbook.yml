@@ -1,0 +1,15 @@
+---
+- name: Updating system packages
+  hosts: testing
+  become: yes
+
+  tasks:
+    - name: Update all packages to their latest version
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+
+    - name: Restart to reboot to the newest kernel
+      shell: "sleep 5 && reboot"
+      async: 1
+      poll: 0

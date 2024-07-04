@@ -1,8 +1,7 @@
-# include:
-#   local: "/.gitlab/pipelines/Bootstrap-Ansible-Hosts.gitlab-ci.yml"
 stages:
   - lint
   - bootstrap
+  - update
 
 lint-ansible-playbook:
   stage: lint
@@ -28,3 +27,12 @@ bootstrap-ansible-hosts:
   script:
     - ./bootstrap.sh ${BOOTSTRAP_USER} ${PUB_KEY_FILE_PATH}
   when: manual
+
+update-system-packages:
+  stage: update
+  tags:
+    - ansible
+  before_script:
+    - cd ansible/
+  script:
+    - ansible-playbook update_system.playbook.yml
