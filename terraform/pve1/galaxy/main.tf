@@ -1,5 +1,5 @@
 module "galaxy" {
-  source              = "git::https://github.com/shakir85/terraform_modules.git//proxmox/vm?ref=v0.0.3"
+  source              = "git::https://github.com/shakir85/terraform_modules.git//proxmox/vm?ref=v0.0.4"
   proxmox_node_name   = "pve1"
   disk_name           = "sda"
   ssh_public_key_path = var.id_rsa_pub
