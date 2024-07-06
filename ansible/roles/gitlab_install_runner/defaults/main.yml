@@ -5,4 +5,4 @@ runner_description: "Ansible-Generated host: {{ inventory_hostname }} timestamp:
 # Export these vars first
 runner_token: "{{ lookup('env', 'RUNNER_TOKEN') }}"
 gitlab_api_token: "{{ lookup('env', 'GITLAB_API_TOKEN') }}"
-gitlab_deb_pkg_sha: d43d577aee624d601939edcaadf5edf0e8fdc2be5c93b778eaa319ddd114ce20
+gitlab_deb_pkg_sha: 816579de12661331a8076bcb4eb4a10e8d6706b4d70774cd438688591992a69e 

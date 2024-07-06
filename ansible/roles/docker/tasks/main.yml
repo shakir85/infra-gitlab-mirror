@@ -22,12 +22,12 @@
 
 - name: Install Docker Compose
   ansible.builtin.apt:
-    name: docker-compose-plugin={{ docker_compose_version }}
+    name: docker-compose-plugin
     state: present
 
 - name: Install Docker Buildx
   ansible.builtin.apt:
-    name: docker-buildx-plugin={{ docker_buildx_version }}
+    name: docker-buildx-plugin
     state: present
 
 - name: Create Docker Group
