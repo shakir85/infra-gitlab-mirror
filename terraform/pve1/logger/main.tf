@@ -11,6 +11,7 @@ module "logger" {
   description         = "Managed by Terraform. Logs management."
   memory              = 8192
   cores               = 2
+  cpu_type            = "host"
   sockets             = 1
   disk_size           = 256
 }
