@@ -10,7 +10,6 @@
     url: "{{ gitlab_deb_pkg_url }}"
     dest: /tmp/{{ gitlab_deb_pkg_name }}
     mode: 0755
-    checksum: "sha256:{{ gitlab_deb_pkg_sha }}"
   when: not runner_debian_package.stat.exists
 
 - name: Install Gitlab Runner
