@@ -1,0 +1,11 @@
+---
+- name: Play for configuring server [devops]
+  hosts: devops
+  become: true
+
+  roles:
+    - common
+    - docker
+    - gitlab_install_runner
+    - gitlab_register_runner
+    - docker_group
