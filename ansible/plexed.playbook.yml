@@ -1,0 +1,13 @@
+---
+- name: Play for configuring [plexed]
+  hosts: plexed
+  become: true
+
+  roles:
+    - common
+    - docker
+    - gitlab_install_runner
+    - gitlab_register_runner
+    - gitlab_configure_runner
+    - nfs
+    - docker_group
