@@ -1,6 +1,6 @@
 ---
-- name: Play for configuring [plexed]
-  hosts: plexed
+- name: Play for configuring [jellyfin]
+  hosts: jellyfin
   become: true
 
   roles:
